@@ -34,11 +34,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 498);
+            this.ClientSize = new System.Drawing.Size(322, 467);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Name = "frm_main";
             this.Text = "Calculator";
+            this.Load += new System.EventHandler(this.frm_main_Load);
             this.ResumeLayout(false);
 
         }
