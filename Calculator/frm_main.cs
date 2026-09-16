@@ -16,6 +16,8 @@ namespace Calculator
         static private Color NUMBER_BG = Color.WhiteSmoke;
         static private Color EQUAL_BG = Color.LightSeaGreen;
 
+        private Label RESULT_LABEL;
+
         public struct Btn_Struct
         {
             public char Content;
@@ -25,9 +27,14 @@ namespace Calculator
                 this.Content = content;
                 this.Bg_Color = bg_color;
             }
+
+            //Necessario mettere override qui così che sia relativo alla struct
+            public override string ToString() //Modifichiamo il tostring in modo che restituisce il testo bene senza .content
+            {
+                return Content.ToString();
+            }
         }
 
-        
         private Btn_Struct[,] buttons =
         {
             {new Btn_Struct('%', OPERATION_BG), new Btn_Struct('\u0152', OPERATION_BG), new Btn_Struct('C', OPERATION_BG), new Btn_Struct('\u232B', OPERATION_BG)},
@@ -35,7 +42,7 @@ namespace Calculator
             {new Btn_Struct('7', NUMBER_BG), new Btn_Struct('8', NUMBER_BG), new Btn_Struct('9', NUMBER_BG), new Btn_Struct('X', OPERATION_BG)},
             {new Btn_Struct('4', NUMBER_BG), new Btn_Struct('5', NUMBER_BG), new Btn_Struct('6', NUMBER_BG), new Btn_Struct('-', OPERATION_BG)},
             {new Btn_Struct('1', NUMBER_BG), new Btn_Struct('2', NUMBER_BG), new Btn_Struct('3', NUMBER_BG), new Btn_Struct('+', OPERATION_BG)},
-            {new Btn_Struct('\u00B1', OPERATION_BG), new Btn_Struct('0', NUMBER_BG), new Btn_Struct(',', OPERATION_BG), new Btn_Struct('=', EQUAL_BG)} //\u permette di definire un carattere col codice unicode
+            {new Btn_Struct('\u00B1', NUMBER_BG), new Btn_Struct('0', NUMBER_BG), new Btn_Struct(',', NUMBER_BG), new Btn_Struct('=', EQUAL_BG)} //\u permette di definire un carattere col codice unicode
         };
 
         public frm_main()
@@ -45,7 +52,23 @@ namespace Calculator
 
         private void frm_main_Load(object sender, EventArgs e)
         {
+            Make_Result_Label();
             Make_Buttons();
+        }
+
+        private void Make_Result_Label()
+        {
+            RESULT_LABEL = new Label()
+            {
+                Font = new Font("Segoe", 16),
+                TextAlign = ContentAlignment.MiddleRight,
+                AutoSize = false,
+                Location = new Point(0, 0),
+                Size = new Size(this.Width, 100)
+                //BackColor = Color.Red
+            };
+
+            this.Controls.Add(RESULT_LABEL);
         }
 
         private void Make_Buttons()
@@ -63,14 +86,22 @@ namespace Calculator
                     btn.Left = pos_x;
                     btn.Top = pos_y;
                     btn.Font = new Font("Segoe UI", 16);
-                    btn.Text = buttons[i, j].Content.ToString();
+                    //btn.Text = buttons[i, j].Content.ToString();
+                    btn.Text = buttons[i, j].ToString();
                     btn.BackColor = buttons[i, j].Bg_Color;
+
+                    btn.Click += Btn_Click;
                     this.Controls.Add(btn);
 
                     pos_x += btn_width;
                 }
                 pos_y += btn_height;
             }
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
